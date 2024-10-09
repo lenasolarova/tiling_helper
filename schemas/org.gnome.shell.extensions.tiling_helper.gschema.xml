@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.tiling_helper" path="/org/gnome/shell/extensions/tiling_helper/">
+    <key name="show-indicator" type="b">
+      <default>false</default>
+    </key>
+    <key name="show-indi" type="i">
+      <default>0</default>
+    </key>
+    <key name="show-i" type="i">
+      <default>0</default>
+    </key>
+    <key name="left-third" type="as">
+      <default><![CDATA[['<Super>KP_4']]]></default>
+    </key>
+  </schema>
+</schemalist>

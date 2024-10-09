@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="tiling_helper@helping_tiler">
+
+    <object class="AdwPreferencesPage" id="visual">
+        <property name="title" translatable="yes" comments="Translators: This is the name of a tab in the prefs window">Visual</property>
+        <property name="icon-name">edit-copy-symbolic</property>
+        <child>
+            <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes" comments="Translators: This is the header for a preference group in the 'Visual' tab">Tiling Popup</property>
+                <child>
+                    <object class="AdwSwitchRow" id="show-indicator">
+                        <property name="title" translatable="yes" comments="Translators: Does stuff">show-indicator</property>
+                    </object>
+                </child>
+
+                <child>
+                    <object class="AdwSpinRow" id="show-indi">
+                        <property name="title" translatable="yes" comments="Translators: show-indi it does">Stuffsies</property>
+                        <property name="adjustment">
+                            <object class="GtkAdjustment">
+                                <property name="value">2</property>
+                                <property name="lower">0</property>
+                                <property name="upper">100</property>
+                                <property name="step-increment">1</property>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+            </object>
+        </child> 
+    </object>
+
+    <object class="AdwPreferencesPage" id="numerical">
+        <property name="title" translatable="yes" comments="Translators: This is the name of a tab in the prefs window">Numerical</property>
+        <property name="icon-name">format-justify-fill-symbolic</property>
+        <child>
+            <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes" comments="Translators: This is the header for a preference group in the 'numerical' tab">Tiling Popup</property>
+                <child>
+                    <object class="AdwSpinRow" id="show-i">
+                        <property name="title" translatable="yes" comments="Translators: show-i it does">Stuffsies</property>
+                        <property name="adjustment">
+                            <object class="GtkAdjustment">
+                                <property name="value">2</property>
+                                <property name="lower">0</property>
+                                <property name="upper">100</property>
+                                <property name="step-increment">1</property>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+            </object>
+        </child> 
+    </object>
+</interface>

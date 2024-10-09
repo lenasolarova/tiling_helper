@@ -1,0 +1,10 @@
+{
+  "name": "Tiling Helper",
+  "description": "Helping you tile",
+  "uuid": "tiling_helper@helping_tiler",
+  "shell-version": [
+    "47"
+  ],
+  "gettext-domain": "tiling_helper@helping_tiler",
+  "settings-schema": "org.gnome.shell.extensions.tiling_helper"
+}
