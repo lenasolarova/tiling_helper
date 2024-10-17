@@ -36,8 +36,6 @@ class Indicator extends PanelMenu.Button {
 
         let emptySeparator = new PopupMenu.PopupSeparatorMenuItem(_(''));
         this.menu.addMenuItem(emptySeparator);
-
-        Tiler.shortcuts();
     }
     
 });
@@ -51,6 +49,8 @@ export default class TilingHelper extends Extension {
          // Add a menu item to open the preferences window
          this._indicator.menu.addAction(_('Preferences'),
          () => this.openPreferences());
+
+         Tiler.shortcuts(this);
 
     }
 

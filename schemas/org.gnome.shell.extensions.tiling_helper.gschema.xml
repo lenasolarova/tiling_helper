@@ -10,8 +10,10 @@
     <key name="show-i" type="i">
       <default>0</default>
     </key>
+
     <key name="left-third" type="as">
-      <default><![CDATA[['<Super>KP_4']]]></default>
+      <default>["&lt;Super&gt;Down"]</default>
     </key>
   </schema>
+
 </schemalist>

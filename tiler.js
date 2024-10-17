@@ -5,6 +5,7 @@ import GObject from 'gi://GObject';
 import Mtk  from 'gi://Mtk';
 import Shell from 'gi://Shell';
 import Gio from 'gi://Gio';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 export default class Tiler {
     static vertTileByNum(number){
@@ -36,18 +37,20 @@ export default class Tiler {
         });
     }
 
-    static shortcuts(){
-        global.display.add_keybinding(
+    static shortcuts(extension){
+        Main.wm.addKeybinding(
             'left-third',
-            new Gio.Settings({ schema_id: 'org.gnome.shell.extensions.tiling_helper' }),
+            extension.getSettings(),
             Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
-            this.handler
+            Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
+            this.tile2.bind(this)
         );
         console.log("left third pls");
     }
 
-    static handler(arg1, arg2, arg3){
-        console.log(arg3.get_name());
+    static tile2(){
+        console.log("PLEASEE");
+        this.vertTileByNum(3);
 
     }
 }
