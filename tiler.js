@@ -10,8 +10,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 export default class Tiler {
     static vertTileByNum(number){
         this._windows = [];
-        /*this._workspaces = [];
-        this._monitors = [];*/
+        /*this._workspaces = [];*/
 
         const currWorkspace = global.workspace_manager.get_active_workspace();
         const currMonitor = global.display.get_current_monitor();

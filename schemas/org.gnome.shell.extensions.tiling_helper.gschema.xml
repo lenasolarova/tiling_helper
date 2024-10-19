@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.gnome.shell.extensions.tiling_helper" path="/org/gnome/shell/extensions/tiling_helper/">
-    <key name="show-indicator" type="b">
-      <default>false</default>
+    <key name="select-one" type="i">
+      <default>1</default>
     </key>
-    <key name="show-indi" type="i">
+    <key name="select-two" type="i">
       <default>0</default>
     </key>
-    <key name="show-i" type="i">
+
+
+    <key name="nothing-yet" type="i">
       <default>0</default>
     </key>
 
