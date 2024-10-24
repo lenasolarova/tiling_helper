@@ -5,12 +5,11 @@ import Tiler from './tiler.js'
 import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
-
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 const Indicator = GObject.registerClass(
 class Indicator extends PanelMenu.Button {
-    _init() {
+    _init(settings) {
         super._init(0.0, _('Indicator'));
 
         this.add_child(new St.Icon({
@@ -42,15 +41,25 @@ class Indicator extends PanelMenu.Button {
 
 
 export default class TilingHelper extends Extension {
-    enable() {
-        this._indicator = new Indicator();
+    constructor(metadata) {
+        super(metadata);
+    }
+
+    async enable() {
+        this._settings = this.getSettings();
+        this._indicator = new Indicator(this._settings);
         Main.panel.addToStatusArea(this.uuid, this._indicator);
 
-         // Add a menu item to open the preferences window
-         this._indicator.menu.addAction(_('Preferences'),
-         () => this.openPreferences());
+        // Add a menu item to open the preferences window
+        this._indicator.menu.addAction(_('Preferences'),
+        () => this.openPreferences());
 
-         Tiler.shortcuts(this);
+        Tiler.shortcuts(this);
+
+        this.selectOneHnadler = this._settings.connect('changed::select-one', (settings, key) => {
+            let selectOne = settings.get_int(key);
+            Tiler.vertTileByNum(selectOne);
+        });
 
     }
 

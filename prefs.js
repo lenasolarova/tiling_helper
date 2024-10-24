@@ -1,17 +1,11 @@
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
-import Adw from 'gi://Adw';
 import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
-/*import Main from 'resource:///org/gnome/shell/ui/main.js';*/
-//import Tiler from './tiler.js'
 
 
 
 export default class ExamplePreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
-
-        //this._monitors = Main.layoutManager.monitors;
-
         window._settings = this.getSettings();
         const builder = new Gtk.Builder();
         builder.set_translation_domain(this.uuid);
@@ -25,20 +19,16 @@ export default class ExamplePreferences extends ExtensionPreferences {
         const widget = builder.get_object('select-one');
         window._settings.bind('select-one', widget, 'selected',
             Gio.SettingsBindFlags.DEFAULT);
-        //widget.set_selected(window._settings.get_int('select-one'));
-        console.log(window._settings.get_int('select-one'));
         widget.connect('notify::selected-item', () => {
-            console.log("hello");
+            console.log("hello")
+            console.log(window._settings.get_int('select-one'))
         });
 
+        const widget1 = builder.get_object('select-two');
+        window._settings.bind('select-two', widget1, 'selected',
+            Gio.SettingsBindFlags.DEFAULT);
 
-        //if (this._monitors.length > 1){
-            const widget1 = builder.get_object('select-two');
-            window._settings.bind('select-two', widget1, 'selected',
-                Gio.SettingsBindFlags.DEFAULT);
-            //widget.set_selected(window._settings.get_int('select-two'));
-            console.log(window._settings.get_int('select-two'));
-        //}
+        console.log(window._settings.get_int('select-two'));
 
         const widget2 = builder.get_object('nothing-yet');
         window._settings.bind('nothing-yet', widget2, 'value',

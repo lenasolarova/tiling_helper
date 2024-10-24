@@ -1,23 +1,17 @@
 import Meta from 'gi://Meta';
-import Atk from 'gi://Atk';
-import Clutter from 'gi://Clutter';
-import GObject from 'gi://GObject';
 import Mtk  from 'gi://Mtk';
 import Shell from 'gi://Shell';
-import Gio from 'gi://Gio';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 export default class Tiler {
     static vertTileByNum(number){
         this._windows = [];
-        /*this._workspaces = [];*/
 
         const currWorkspace = global.workspace_manager.get_active_workspace();
         const currMonitor = global.display.get_current_monitor();
         const monitorRect = new Mtk.Rectangle(currWorkspace.get_work_area_for_monitor(currMonitor));
 
         const blockWidth = Math.ceil(monitorRect.width / number);
-
 
         this._windows = currWorkspace.list_windows();
 
@@ -44,13 +38,10 @@ export default class Tiler {
             Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
             this.tile2.bind(this)
         );
-        console.log("left third pls");
     }
 
     static tile2(){
-        console.log("PLEASEE");
         this.vertTileByNum(3);
-
     }
 }
 
