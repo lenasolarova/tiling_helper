@@ -35,6 +35,7 @@ class Indicator extends PanelMenu.Button {
 
         let emptySeparator = new PopupMenu.PopupSeparatorMenuItem(_(''));
         this.menu.addMenuItem(emptySeparator);
+
     }
     
 });
@@ -60,6 +61,9 @@ export default class TilingHelper extends Extension {
             let selectOne = settings.get_int(key);
             Tiler.vertTileByNum(selectOne);
         });
+
+        this._settings.set_int('monitor-num', Main.layoutManager.monitors.length);
+        console.log("number of monitors:", this._settings.get_int('monitor-num'));
 
     }
 
