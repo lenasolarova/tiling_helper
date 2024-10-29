@@ -2,6 +2,8 @@ import GObject from 'gi://GObject';
 import St from 'gi://St';
 
 import Tiler from './tiler.js'
+import Shortcutter from './shortcutter.js'
+
 import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
@@ -23,11 +25,12 @@ class Indicator extends PanelMenu.Button {
         let tileHalves = new PopupMenu.PopupMenuItem(_('Tile halves'));
         let tileThirds = new PopupMenu.PopupMenuItem(_('Tile thirds'));
 
+        //binds the two basic buttons ('Tile halves' and 'Tile thirds')
         tileHalves.connect('activate', () => {
-            Tiler.vertTileByNum(2);
+            Tiler.tileByNum(2);
         });
         tileThirds.connect('activate', () => {
-            Tiler.vertTileByNum(3);
+            Tiler.tileByNum(3);
         });
 
         this.menu.addMenuItem(tileHalves);
@@ -35,7 +38,6 @@ class Indicator extends PanelMenu.Button {
 
         let emptySeparator = new PopupMenu.PopupSeparatorMenuItem(_(''));
         this.menu.addMenuItem(emptySeparator);
-
     }
     
 });
@@ -51,20 +53,35 @@ export default class TilingHelper extends Extension {
         this._indicator = new Indicator(this._settings);
         Main.panel.addToStatusArea(this.uuid, this._indicator);
 
-        // Add a menu item to open the preferences window
+        //adds a menu item to open the preferences window
         this._indicator.menu.addAction(_('Preferences'),
         () => this.openPreferences());
 
-        Tiler.shortcuts(this);
+        //adds shortcuts
+        Shortcutter.shortcuts(this);
 
+        //tiles current monitor on change
         this.selectOneHnadler = this._settings.connect('changed::select-one', (settings, key) => {
             let selectOne = settings.get_int(key);
-            Tiler.vertTileByNum(selectOne);
+            Tiler.tileByNum(this.correctNumber(selectOne));
         });
 
         this._settings.set_int('monitor-num', Main.layoutManager.monitors.length);
         console.log("number of monitors:", this._settings.get_int('monitor-num'));
 
+    }
+
+    correctNumber(number){
+        switch(number){
+            case 0:
+                return 2;
+            case 1:
+                return 3;
+            case 2:
+                return 4;
+            case 3:
+                return 6;
+        }
     }
 
     disable() {

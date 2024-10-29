@@ -1,43 +1,75 @@
 import Gio from 'gi://Gio';
+import Adw from 'gi://Adw';
 import Gtk from 'gi://Gtk';
 import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
-
-
 
 export default class ExamplePreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         window._settings = this.getSettings();
-        const builder = new Gtk.Builder();
-        builder.set_translation_domain(this.uuid);
-        builder.add_from_file(`/home/leni/.local/share/gnome-shell/extensions/tiling_helper@helping_tiler/prefs.ui`);
+        
+        //adds the Keybinding page
+        const pageKeybind = new Adw.PreferencesPage({
+            title: _('Keybinding'),
+            icon_name: 'edit-copy-symbolic',
+        });
+        window.add(pageKeybind);
 
-        //add pages
-        window.add(builder.get_object('keybinding'));
-        window.add(builder.get_object('in-progress'));
+        //adds preference group for monitors
+        const monitors = new Adw.PreferencesGroup({
+            title: _('Monitors:'),
+        });
+        pageKeybind.add(monitors);
 
-        //bind the setting to the button for monitor one
-        const widget = builder.get_object('select-one');
-        window._settings.bind('select-one', widget, 'selected',
+
+        const optionOne =  [_("Halves"), _("Thirds"), _("Quarters"), _("Sixths")];
+        let optionsListOne = new Gtk.StringList();
+        optionOne.forEach((thing) => {
+            optionsListOne.append(thing);
+        })
+
+        //adds comborow for first monitor
+        const selectileOne = new Adw.ComboRow({
+            title: _('Select tiing'),
+            model: optionsListOne
+        })
+        monitors.add(selectileOne);
+
+        window._settings.bind('select-one', selectileOne, 'selected',
             Gio.SettingsBindFlags.DEFAULT);
-        widget.connect('notify::selected-item', () => {
+            selectileOne.connect('notify::selected-item', () => {
             console.log("hello monitor one")
             console.log(window._settings.get_int('select-one'))
         });
 
-        //bind after > 1 monitor is active
-        if ((window._settings.get_int('monitor-num')) != 1){
-            const widget1 = builder.get_object('select-two');
-            window._settings.bind('select-two', widget1, 'selected',
-            Gio.SettingsBindFlags.DEFAULT);
-            widget.connect('notify::selected-item', () => {
+        //adds buttons and binds them after > 1 monitor is active
+        if ((window._settings.get_int('monitor-num')) == 2){
+            const optionTwo =  [_("Halves"), _("Thirds"), _("Quarters"), _("Sixths")];
+            let optionsListTwo = new Gtk.StringList();
+            optionTwo.forEach((thing) => {
+                optionsListTwo.append(thing);
+            })
+
+            const selectileTwo = new Adw.ComboRow({
+                title: _('Select tiing'),
+                model: optionsListTwo
+            })
+            monitors.add(selectileTwo);
+
+            window._settings.bind('select-two', selectileTwo, 'selected',
+                Gio.SettingsBindFlags.DEFAULT);
+                selectileTwo.connect('notify::selected-item', () => {
                 console.log("hello monitor two")
                 console.log(window._settings.get_int('select-two'))
             });
         }
     
+        
         //TODO figure what will be here
-        const widget2 = builder.get_object('nothing-yet');
-        window._settings.bind('nothing-yet', widget2, 'value',
-            Gio.SettingsBindFlags.DEFAULT);
+        //adds the Other page
+         const pageOther = new Adw.PreferencesPage({
+            title: _('Other'),
+            icon_name: 'format-justify-fill-symbolic',
+        });
+        window.add(pageOther);
     }
 }
