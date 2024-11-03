@@ -6,7 +6,7 @@ import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Ex
 export default class ExamplePreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         window._settings = this.getSettings();
-        
+
         //adds the Keybinding page
         const pageKeybind = new Adw.PreferencesPage({
             title: _('Keybinding'),
@@ -42,6 +42,7 @@ export default class ExamplePreferences extends ExtensionPreferences {
         });
 
         //adds buttons and binds them after > 1 monitor is active
+        //only allows two for testing purposes for now
         if ((window._settings.get_int('monitor-num')) == 2){
             const optionTwo =  [_("Halves"), _("Thirds"), _("Quarters"), _("Sixths")];
             let optionsListTwo = new Gtk.StringList();
