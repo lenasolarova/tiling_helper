@@ -16,9 +16,12 @@
       <default>0</default>
     </key>
 
-    <key name="left-third" type="as">
-      <default>["&lt;Super&gt;Down"]</default>
+    <key name="left-thirds" type="as">
+      <default><![CDATA[['<Super>Up']]]></default>
+    </key>
+
+    <key name="left-quarter" type="as">
+      <default><![CDATA[['<Super>Left']]]></default>
     </key>
   </schema>
-
 </schemalist>

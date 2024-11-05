@@ -1,4 +1,6 @@
 import GObject from 'gi://GObject';
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 import St from 'gi://St';
 
 import Tiler from './tiler.js'
@@ -57,8 +59,54 @@ export default class TilingHelper extends Extension {
         this._indicator.menu.addAction(_('Preferences'),
         () => this.openPreferences());
 
+        //disables shortcuts
+        //TODO: should loop through the whole settings and find keywords
+        const gnomeMutterKeybindings = new Gio.Settings({
+            schema_id: 'org.gnome.mutter.keybindings'
+        });
+
+        const gnomeDesktopKeybindings = new Gio.Settings({
+            schema_id: 'org.gnome.desktop.wm.keybindings'
+        });
+        //const emptyStrvVariant = new GLib.Variant('as', []);
+        //idk whz it does not work with empty one
+        const emptyStrvVariant1 = new GLib.Variant('as', ['<Super>KP_2']);
+        const emptyStrvVariant2 = new GLib.Variant('as', ['<Super>KP_3']);
+        const emptyStrvVariant3 = new GLib.Variant('as', ['<Super>KP_1']);
+        const emptyStrvVariant4 = new GLib.Variant('as', ['<Super>KP_9']);
+
+
+        
+        //unbinds current keybinds
+        if (gnomeDesktopKeybindings.get_strv('maximize').includes('<Super>Up')) {
+            gnomeDesktopKeybindings.set_value('maximize', emptyStrvVariant1);
+        }
+        gnomeDesktopKeybindings.set_value('maximize', emptyStrvVariant1);
+
+        if (gnomeDesktopKeybindings.get_strv('unmaximize').includes('<Super>Down')) {
+            //console.log("found super downer");
+            gnomeDesktopKeybindings.set_value('unmaximize', emptyStrvVariant2);
+            //console.log("now binded there:", gnomeDesktopKeybindings.get_strv('unmaximize'));
+        }
+        gnomeDesktopKeybindings.set_value('unmaximize', emptyStrvVariant2);
+
+
+        if (gnomeMutterKeybindings.get_strv('toggle-tiled-left').includes('<Super>Left')) {
+            gnomeMutterKeybindings.set_value('toggle-tiled-left', emptyStrvVariant3);
+        }
+        gnomeMutterKeybindings.set_value('toggle-tiled-left', emptyStrvVariant3)
+
+        if (gnomeMutterKeybindings.get_strv('toggle-tiled-right').includes('<Super>Right')) {
+            gnomeMutterKeybindings.set_value('toggle-tiled-right', emptyStrvVariant4);
+        }
+        gnomeMutterKeybindings.set_value('toggle-tiled-right', emptyStrvVariant4)
+
         //adds shortcuts
         Shortcutter.shortcuts(this);
+
+        console.log("now binded on left t:", this._settings.get_strv('left-thirds'));
+        console.log("now binded on left q:", this._settings.get_strv('left-quarter'));
+
 
         //tiles current monitor on change
         this.selectOneHnadler = this._settings.connect('changed::select-one', (settings, key) => {

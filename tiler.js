@@ -4,7 +4,7 @@ import Shell from 'gi://Shell';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 export default class Tiler {
-    static tileByNum(number){
+    static tileByNum(number){     
         this._windows = [];
 
         const currWorkspace = global.workspace_manager.get_active_workspace();
@@ -12,14 +12,16 @@ export default class Tiler {
         const monitorRect = new Mtk.Rectangle(currWorkspace.get_work_area_for_monitor(currMonitor));
         this._windows = currWorkspace.list_windows();
 
+        console.log("got here by", number);
+
         //tiles only vertically
         if (number < 4){
-            this.verticalTile(number, currWorkspace, currMonitor, monitorRect, this._windows);
+            Tiler.verticalTile(number, currWorkspace, currMonitor, monitorRect, this._windows);
         }
 
         //tiles horizontally
         else{
-            this.horizontalTile(number, currWorkspace, currMonitor, monitorRect, this._windows);
+            Tiler.horizontalTile(number, currWorkspace, currMonitor, monitorRect, this._windows);
         }
         
     }

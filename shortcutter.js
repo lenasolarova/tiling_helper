@@ -7,15 +7,19 @@ import Tiler from './tiler.js'
 export default class Shortcutter {
     static shortcuts(extension){
         Main.wm.addKeybinding(
-            'left-third',
+            'left-thirds',
             extension.getSettings(),
             Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
             Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
-            this.tile2.bind(this)
+            Tiler.tileByNum.bind(this, 3)
         );
-    }
 
-    static tile2(){
-        Tiler.tileByNum(3);
+        Main.wm.addKeybinding(
+            'left-quarter',
+            extension.getSettings(),
+            Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
+            Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
+            Tiler.tileByNum.bind(this, 4)
+        );
     }
 }
