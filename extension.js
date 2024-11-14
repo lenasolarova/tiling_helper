@@ -61,13 +61,23 @@ export default class TilingHelper extends Extension {
         //adds shortcuts
         Shortcutter.shortcuts(this);
 
-        console.log("now binded on left t:", this._settings.get_strv('left-third'));
+        //tiles monitor one on click on "apply" button
+        this.selectOneHandler = this._settings.connect('changed::apply-one', (settings, key) => {
+            console.log("apply 1 clicked");
+            let selectOne = settings.get_int('select-one');
+            
+            const tilingNum = TilingHelper.correctNumber(selectOne);
+            if (!(tilingNum == 0)){
+                Tiler.tileByNum(tilingNum);
+            }
+        });
 
-
-        //tiles current monitor on change
-        this.selectOneHnadler = this._settings.connect('changed::select-one', (settings, key) => {
-            let selectOne = settings.get_int(key);
-            Tiler.tileByNum(TilingHelper.correctNumber(selectOne));
+        //tiles monitor two on click on "apply" button
+        //TODO: change tilebynum func to reflect another monitor, not just current one
+        this.selectTwoHandler = this._settings.connect('changed::apply-two', (settings, key) => {
+            console.log("apply 2 clicked");
+            let selectTwo = settings.get_int('select-two');
+            Tiler.tileByNum(TilingHelper.correctNumber(selectTwo));
         });
 
         this._settings.set_int('monitor-num', Main.layoutManager.monitors.length);
@@ -77,12 +87,14 @@ export default class TilingHelper extends Extension {
     static correctNumber(number){
         switch(number){
             case 0:
-                return 2;
+                return 0;
             case 1:
-                return 3;
+                return 2;
             case 2:
-                return 4;
+                return 3;
             case 3:
+                return 4;
+            case 4:
                 return 6;
         }
     }

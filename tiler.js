@@ -18,7 +18,6 @@ export default class Tiler {
 
         //decides if we need to tile horizontally
         let horizontalDif = 1;
-
         if (number >= 4){
             horizontalDif = 2;
         }

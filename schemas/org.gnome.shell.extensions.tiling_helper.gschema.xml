@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.gnome.shell.extensions.tiling_helper" path="/org/gnome/shell/extensions/tiling_helper/">
+     <!--Buttons outside prefs-->
     <key name="select-one" type="i">
       <default>0</default>
+    </key>
+    <key name="apply-one" type="b">
+      <default>false</default>
     </key>
     <key name="select-two" type="i">
       <default>0</default>
     </key>
+    <key name="apply-two" type="b">
+      <default>false</default>
+    </key>
 
+     <!--non-clickable variables-->
     <key name="monitor-num" type="i">
       <default>0</default>
     </key>
@@ -16,6 +24,7 @@
       <default>0</default>
     </key>
 
+    <!--Keybinding:-->
     <!--HALVES-->
     <key name="left-half" type="as">
       <default><![CDATA[['<Super>Left']]]></default>
