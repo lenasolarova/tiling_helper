@@ -63,6 +63,7 @@ export default class TilingHelper extends Extension {
 
         //tiles monitor one on click on "apply" button
         this.selectOneHandler = this._settings.connect('changed::apply-one', (settings, key) => {
+            this._settings.set_boolean('apply-one', false);
             console.log("apply 1 clicked");
             let selectOne = settings.get_int('select-one');
             
@@ -75,6 +76,7 @@ export default class TilingHelper extends Extension {
         //tiles monitor two on click on "apply" button
         //TODO: change tilebynum func to reflect another monitor, not just current one
         this.selectTwoHandler = this._settings.connect('changed::apply-two', (settings, key) => {
+            this._settings.set_boolean('apply-two', false);
             console.log("apply 2 clicked");
             let selectTwo = settings.get_int('select-two');
             Tiler.tileByNum(TilingHelper.correctNumber(selectTwo));

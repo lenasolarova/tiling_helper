@@ -43,26 +43,25 @@ export default class ExamplePreferences extends ExtensionPreferences {
         selectileOne.connect('notify::selected-item', () => {
             console.log("hello monitor one")
             console.log(window._settings.get_int('select-one'));
-            window._settings.set_boolean('apply-one', false);
 
             //adds keybinding picture
             let keybindPicturePath = "";
             let alternativeText = "";
             switch(window._settings.get_int('select-one')){
                 case 1:
-                    keybindPicturePath = "halves.png";
+                    keybindPicturePath = "2.png";
                     alternativeText = "Super + Left / Right";
                     break;
                 case 2:
-                    keybindPicturePath = "thirds.png";
+                    keybindPicturePath = "3.png";
                     alternativeText = "Super + 4 / 5 / 6";
                     break;
                 case 3:
-                    keybindPicturePath = "quarters.png";
+                    keybindPicturePath = "4.png";
                     alternativeText = "Super + Q / W \n E / R";
                     break;
                 case 4:
-                    keybindPicturePath = "sixths.png"; 
+                    keybindPicturePath = "6.png"; 
                     alternativeText = "Super + 7 / 8 / 9 \n 1 / 2 / 3";
             }
 
@@ -85,6 +84,7 @@ export default class ExamplePreferences extends ExtensionPreferences {
             title: _('APPLY'),
         })
         monitorOne.add(applyTileOne);
+        window._settings.set_boolean('apply-one', false);
 
         window._settings.bind('apply-one', applyTileOne, 'active',
             Gio.SettingsBindFlags.DEFAULT);
